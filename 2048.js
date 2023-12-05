@@ -3,14 +3,13 @@ let score = 0;
 const rows = 4;
 const columns = 4;
 
-let highScore = localStorage.getItem("2048HighScore") || 0;
+let highScore = 0;
 
 function updateHighScore() {
     if (score > highScore) {
         highScore = score;
-        localStorage.setItem("2048HighScore", highScore);
     }
-    document.getElementById("high-score").innerText = highScore;
+    document.getElementById("high-score").innerText = highScore.toString();
 }
 
 function isGameOver() {
@@ -45,7 +44,6 @@ function setGame() {
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ]
-    updateHighScore();
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             let tile = document.createElement("div");
@@ -57,7 +55,6 @@ function setGame() {
     }
     setNum();
     setNum();
-
 }
 
 function updateTile(tile, num) {
@@ -98,14 +95,15 @@ document.addEventListener('keyup', (e) => {
         if (isGameOver()) {
             setTimeout(() => {
                 alert("Игра завершена! Ваш счет: " + score);
+                updateHighScore();
                 setGame();
-            }, 100);
+            }, 10);
         }
     }
 });
 
 function clearBoard() {
-    var boardContainer = document.getElementById("board");
+    const boardContainer = document.getElementById("board");
     while (boardContainer.firstChild) {
         boardContainer.removeChild(boardContainer.firstChild);
     }
@@ -208,7 +206,6 @@ function setNum() {
 }
 
 function hasEmptyTile() {
-    let count = 0;
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns; c++) {
             if (board[r][c] === 0) {

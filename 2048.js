@@ -4,6 +4,7 @@ const rows = 4;
 const columns = 4;
 
 let highScore = 0;
+let steps = 0;
 
 function updateHighScore() {
     if (score > highScore) {
@@ -37,7 +38,9 @@ window.onload = function () {
 function setGame() {
     clearBoard();
     score = 0;
+    steps = -2;
     document.getElementById("score").innerText = score;
+    document.getElementById("steps").innerText = steps.toString();
     board = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -94,7 +97,7 @@ document.addEventListener('keyup', (e) => {
 
         if (isGameOver()) {
             setTimeout(() => {
-                alert("Игра завершена! Ваш счет: " + score);
+                alert("Игра завершена! Ваш счет: " + score + ". Сделан(о) " + steps + ' ход(ов)');
                 updateHighScore();
                 setGame();
             }, 10);
@@ -154,6 +157,7 @@ function slideRight() {
             updateTile(tile, num);
         }
     }
+    console.log('right')
 }
 
 function slideUp() {
@@ -203,6 +207,8 @@ function setNum() {
             found = true;
         }
     }
+    steps++;
+    document.getElementById("steps").innerText = steps.toString();
 }
 
 function hasEmptyTile() {

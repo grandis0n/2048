@@ -1,6 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const Store = require('electron-store');
-const store = new Store();
 
 let mainWindow;
 
@@ -28,12 +27,4 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
     if (mainWindow === null) createWindow();
-});
-
-ipcMain.on('get-high-score', (event) => {
-    event.returnValue = store.get("2048HighScore") || 0;
-});
-
-ipcMain.on('set-high-score', (event, highScore) => {
-    store.set("2048HighScore", highScore);
 });
